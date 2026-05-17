@@ -82,6 +82,12 @@ export const appConfig = {
         additionalNotes: 'Additional Notes',
         vehicleTypes: ['Sedan', 'SUV', 'Truck', 'Van', 'Other'],
       },
+      summary: {
+        summaryHeading: 'Appointment Summary',
+        serviceLabel: 'Service',
+        dateLabel: 'Date',
+        timeLabel: 'Time',
+      },
     },
   },
   nav: [
