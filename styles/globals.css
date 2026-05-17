@@ -17,6 +17,13 @@
 
   /* Single-use supporting tokens (avoid hex in components). */
   --color-danger: #C0392B;
+  --color-focus-ring: rgba(27, 60, 83, 0.18);
+}
+
+@layer utilities {
+  .focus-ring-field:focus {
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+  }
 }
 
 html,
