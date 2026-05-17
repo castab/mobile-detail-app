@@ -5,7 +5,6 @@ describe('appConfig', () => {
     vi.resetModules()
     const original = process.env.NEXT_PUBLIC_APP_NAME
     // Ensure fallback path.
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete process.env.NEXT_PUBLIC_APP_NAME
 
     const { appConfig } = await import('@/config/app')

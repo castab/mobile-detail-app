@@ -153,42 +153,46 @@ export function BookingMock() {
               </button>
             </div>
 
-            <div className="mt-4 grid grid-cols-7 gap-2 text-center text-xs text-taupe">
-              {appConfig.copy.bookingPage.calendar.weekdaysShort.map((d, idx) => (
-                <div key={`${d}-${idx}`} className="py-1">
-                  {d}
+            <div className="mt-4 w-full overflow-x-auto overscroll-x-contain md:flex md:justify-center md:overflow-x-visible">
+              <div className="inline-block min-w-max">
+                <div className="grid grid-cols-[repeat(7,48px)] justify-center gap-2 text-center text-xs text-taupe md:justify-center">
+                  {appConfig.copy.bookingPage.calendar.weekdaysShort.map((d, idx) => (
+                    <div key={`${d}-${idx}`} className="py-1">
+                      {d}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-2 grid grid-cols-7 gap-2">
-              {dayButtons.map((day, idx) => {
-                if (day === null) {
-                  return <div key={`blank-${idx}`} />
-                }
+                <div className="mt-2 grid grid-cols-[repeat(7,48px)] justify-center gap-2 md:justify-center">
+                  {dayButtons.map((day, idx) => {
+                    if (day === null) {
+                      return <div key={`blank-${idx}`} aria-hidden className="h-12 w-12" />
+                    }
 
-                const date = new Date(year, monthIndex, day)
-                const selected = isSameDay(date, selectedDate)
+                    const date = new Date(year, monthIndex, day)
+                    const selected = isSameDay(date, selectedDate)
 
-                return (
-                  <button
-                    key={day}
-                    type="button"
-                    className={[
-                      'h-12 w-12 rounded-md border text-label',
-                      'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
-                      'active:scale-[0.97]',
-                      selected
-                        ? 'border-blush bg-blush text-navy'
-                        : 'border-taupe/40 bg-navy text-light hover:border-taupe/70',
-                    ].join(' ')}
-                    aria-pressed={selected}
-                    onClick={() => setSelectedDate(date)}
-                  >
-                    {day}
-                  </button>
-                )
-              })}
+                    return (
+                      <button
+                        key={day}
+                        type="button"
+                        className={[
+                          'h-12 w-12 rounded-md border text-label',
+                          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
+                          'active:scale-[0.97]',
+                          selected
+                            ? 'border-blush bg-blush text-navy'
+                            : 'border-taupe/40 bg-navy text-light hover:border-taupe/70',
+                        ].join(' ')}
+                        aria-pressed={selected}
+                        onClick={() => setSelectedDate(date)}
+                      >
+                        {day}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
