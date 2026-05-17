@@ -1,6 +1,6 @@
 # Mobile Detailing UI Shell
 
-Mobile-first Next.js (App Router) UI shell for a premium mobile auto detailing business. This repo is intentionally backend-free in Phase 1: no database, no auth, no API calls.
+Mobile-first Next.js (App Router) UI shell for a premium mobile auto detailing business. This repo is intentionally backend-free: no database, no auth, no API calls.
 
 Business name + branding are configurable. Do not hardcode them in UI.
 
@@ -70,14 +70,30 @@ GitHub Actions:
 - On PRs: `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm test`
 - On pushes to `main`: Playwright e2e runs (`npm run test:e2e`)
 
-## Deployment (Railway)
+## Deployment
 
-Phase 2 deploys to Railway via GitHub integration.
+This repo is deployable on any platform that can run a standard Next.js production server.
 
-- Build: `npm run build`
-- Start: `npm run start`
-- Set Railway env vars:
-  - `NEXT_PUBLIC_APP_NAME`
-  - `NEXT_PUBLIC_APP_URL` (Railway `.up.railway.app` URL)
+- Native Node.js deploy: build with `npm run build`, start with `npm run start`.
+- Container deploy: use the provided `Dockerfile`.
 
-Custom domain is intentionally deferred until branding/business name is finalized (see `AGENTS.md`).
+Environment variables required at runtime:
+- `NEXT_PUBLIC_APP_NAME`
+- `NEXT_PUBLIC_APP_URL`
+
+### Docker
+
+Build:
+
+```bash
+docker build -t mobile-detail .
+```
+
+Run:
+
+```bash
+docker run --rm -p 3000:3000 \
+  -e NEXT_PUBLIC_APP_NAME="<business name>" \
+  -e NEXT_PUBLIC_APP_URL="http://localhost:3000" \
+  mobile-detail
+```

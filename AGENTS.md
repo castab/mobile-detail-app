@@ -20,15 +20,13 @@ Rules:
 1. Never hardcode the business/app name directly in UI or metadata.
 2. Reference it exclusively via `NEXT_PUBLIC_APP_NAME` and/or `config/app.ts`.
 
-Current build phase: Static UI Shell.
-
-The goal is to build the full visual experience of the application (layout, components, pages) with:
+This repository is intentionally a static UI shell:
 1. No backend.
 2. No database.
 3. No auth.
 4. No API calls.
 
-All data is hardcoded or mocked. This phase exists to lock in look and feel before wiring any business logic.
+All data is hardcoded or mocked. This exists to lock in look and feel before wiring any business logic.
 
 ## Tech Stack
 
@@ -43,9 +41,9 @@ Minimums:
 
 Version pins: do not install versions below those minimums. If the package manager suggests lower versions, override in `package.json`.
 
-## Non-Goals (Phase 1)
+## Non-Goals
 
-Do not install or configure any backend dependencies in Phase 1 (UI shell):
+Do not install or configure any backend dependencies (UI shell):
 1. Prisma or a database driver
 2. Auth providers (NextAuth, etc.)
 3. Email providers (Resend, etc.)
@@ -188,14 +186,14 @@ All user-facing copy and nav definitions live in `config/app.ts`. No content str
 
 Note: any fallback name string is a placeholder and should be treated as such.
 
-## Pages (Phase 1)
+## Pages
 
 Routes:
 1. `/` homepage
 2. `/services` services detail page
 3. `/book` booking page (static mock)
 
-Booking page is UI-only in Phase 1:
+Booking page is UI-only:
 1. No submission
 2. No validation beyond basic HTML constraints
 3. No API calls
@@ -233,7 +231,7 @@ Rules:
   3. New required environment variables or updates to `.env.example`
   4. New routes, key directories, or "where things live"
   5. CI behavior changes (required checks, e2e policy)
-  6. Deployment workflow changes (Railway steps, build/start commands, env vars)
+  6. Deployment workflow changes (platform steps, build/start commands, env vars)
 
 ## Accessibility
 
@@ -286,74 +284,67 @@ Policy:
 
 E2E is intentionally not required on PRs initially (speed + contributor experience). Tighten later if/when the suite remains stable and fast.
 
-## Definition of Done (Phase 1: Static UI Shell)
+## Deployment
 
-Phase 1 is complete when:
-1. `/`, `/services`, and `/book` render correctly at 375px, 768px, and 1280px.
-2. Brand tokens are applied consistently (no hardcoded colors in components).
-3. `Button`, `Badge`, and `Card` primitives are used throughout.
-4. Header renders on all pages with a working mobile nav drawer.
-5. Footer renders on all pages.
-6. `npm run lint` passes.
-7. `npx tsc --noEmit` passes.
-8. `npm test` passes.
-9. `npm run test:e2e` passes locally.
-10. No backend dependencies are installed.
+This repo is deployable on any platform that can run a standard Next.js production server.
 
-## Phase 2 — Railway Launch (GitHub Integration)
+Options:
+1. Native Node.js deploy: build with `npm run build`, start with `npm run start`.
+2. Container deploy: use the provided `Dockerfile`.
 
-This phase deploys the UI shell publicly via Railway without introducing backend features.
+Environment variables required at runtime:
+1. `NEXT_PUBLIC_APP_NAME`
+2. `NEXT_PUBLIC_APP_URL`
 
-Requirements:
-1. Railway project is created and connected to GitHub.
-2. Railway uses:
-   - Build: `npm run build`
-   - Start: `npm run start`
-3. Railway environment variables are set:
-   - `NEXT_PUBLIC_APP_NAME`
-   - `NEXT_PUBLIC_APP_URL` = the Railway `.up.railway.app` URL
-4. Custom domain is deferred until the business name and branding are finalized.
-   - TODO: revisit custom domain + DNS + HTTPS later.
+## Docker
 
-Definition of Done:
-1. Railway deploy succeeds from GitHub integration without manual steps.
-2. The public Railway URL returns `200` for `/`, `/services`, and `/book`.
-3. Navigation between those pages works from the deployed site.
-4. No runtime errors appear in Railway logs during a basic smoke test.
-5. GitHub Actions required checks are green on `main`.
+This repo includes a multi-stage `Dockerfile` that builds Next.js in `standalone` mode and runs the app with `node server.js`.
+
+Build:
+```bash
+docker build -t mobile-detail .
+```
+
+Run:
+```bash
+docker run --rm -p 3000:3000 \
+  -e NEXT_PUBLIC_APP_NAME="<business name>" \
+  -e NEXT_PUBLIC_APP_URL="http://localhost:3000" \
+  mobile-detail
+```
 
 ## Out of Scope (Future Phases)
 
-### Phase 3 — Booking Flow
+### Booking Flow
 
 1. Booking form submission and validation.
 2. Availability calendar with real date logic.
 3. API routes for bookings.
 4. Database + Prisma setup.
 
-### Phase 4 — Customer Identity & Magic Links
+### Customer Identity & Magic Links
 
 1. Customer identity models.
 2. Magic link request/verify flow.
 3. Customer booking management.
 
-### Phase 5 — Admin Dashboard
+### Admin Dashboard
 
 1. Protected admin route.
 2. Booking management and blocked dates.
 
-### Phase 6 — Email & Notifications
+### Email & Notifications
 
 1. Transactional email provider integration.
 2. Customer confirmations and reminders.
 3. Optional SMS notifications.
 
-### Phase 7 — Payments & Account Verification
+### Payments & Account Verification
 
 1. Stripe integration (deposit/payment).
 2. Refund/cancellation rules.
 
-### Phase 8 — Operations & Growth
+### Operations & Growth
 
 1. Multi-staff scheduling.
 2. Add-ons and upsells.
