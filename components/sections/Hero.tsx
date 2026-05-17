@@ -24,14 +24,6 @@ export function Hero() {
         </div>
       </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent/15 blur-3xl md:-right-16 md:-top-16 md:h-[28rem] md:w-[28rem]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-secondary/70 blur-3xl md:-bottom-24 md:-left-16 md:h-[28rem] md:w-[28rem]"
-      />
     </section>
   )
 }
