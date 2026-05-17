@@ -224,6 +224,17 @@ Rules:
 3. No hardcoded hex values in components.
 4. Co-locate styles with components using Tailwind classes.
 
+## Documentation Hygiene
+
+- Keep `README.md` accurate. When a change materially affects onboarding or day-to-day workflows, update `README.md` in the same PR.
+- Material changes include:
+  1. New/changed dev commands (`npm run …`, `npx …`)
+  2. Tooling/version changes (Node/Next/TypeScript/Tailwind/Vitest/Playwright)
+  3. New required environment variables or updates to `.env.example`
+  4. New routes, key directories, or "where things live"
+  5. CI behavior changes (required checks, e2e policy)
+  6. Deployment workflow changes (Railway steps, build/start commands, env vars)
+
 ## Accessibility
 
 1. All interactive elements must have accessible labels.

@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mobile Detailing UI Shell
 
-## Getting Started
+Mobile-first Next.js (App Router) UI shell for a premium mobile auto detailing business. This repo is intentionally backend-free in Phase 1: no database, no auth, no API calls.
 
-First, run the development server:
+Business name + branding are configurable. Do not hardcode them in UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js: 24.13.0+
+- Next.js: 16.2.6+ (App Router)
+- TypeScript: strict
+- Tailwind CSS v3 (semantic brand tokens)
+- Testing: Vitest + React Testing Library, Playwright (e2e)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quick Start
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Install deps:
+   - `npm ci`
+2. Create env file:
+   - Copy `.env.example` -> `.env.development`
+   - Set:
+     - `NEXT_PUBLIC_APP_NAME`
+     - `NEXT_PUBLIC_APP_URL` (usually `http://localhost:3000` locally)
+3. Run dev server:
+   - `npm run dev`
+4. Open:
+   - `http://localhost:3000`
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+- Dev: `npm run dev`
+- Build: `npm run build`
+- Start (prod): `npm run start`
+- Lint: `npm run lint`
+- Typecheck: `npx tsc --noEmit`
+- Unit tests: `npm test`
+- E2E tests: `npm run test:e2e`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` / `npx.cmd`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Where Things Live
 
-## Deploy on Vercel
+- Routes:
+  - `app/page.tsx` (`/`)
+  - `app/services/page.tsx` (`/services`)
+  - `app/book/page.tsx` (`/book`)
+- Central content/config (single source of truth):
+  - `config/app.ts`
+- Layout:
+  - `components/layout/Header.tsx`
+  - `components/layout/Nav.tsx` (mobile drawer)
+  - `components/layout/Footer.tsx`
+- UI primitives (use these instead of ad-hoc elements):
+  - `components/ui/Button.tsx`
+  - `components/ui/Badge.tsx`
+  - `components/ui/Card.tsx`
+- Styles/tokens:
+  - `styles/globals.css` (CSS variables like `--color-primary`, reduced motion, transitions)
+  - `tailwind.config.ts` (semantic colors: `primary/secondary/accent/highlight/text`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Branding Rules (Important)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Never hardcode the business/app name in components or metadata.
+- Use `NEXT_PUBLIC_APP_NAME` and/or `config/app.ts`.
+- No hardcoded hex colors in components. Use semantic Tailwind colors and tokens.
+
+## CI
+
+GitHub Actions:
+- On PRs: `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm test`
+- On pushes to `main`: Playwright e2e runs (`npm run test:e2e`)
+
+## Deployment (Railway)
+
+Phase 2 deploys to Railway via GitHub integration.
+
+- Build: `npm run build`
+- Start: `npm run start`
+- Set Railway env vars:
+  - `NEXT_PUBLIC_APP_NAME`
+  - `NEXT_PUBLIC_APP_URL` (Railway `.up.railway.app` URL)
+
+Custom domain is intentionally deferred until branding/business name is finalized (see `AGENTS.md`).
