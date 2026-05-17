@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand tokens (authoritative) */
+  --color-navy: #202940;
+  --color-bark: #4B4038;
+  --color-taupe: #9A8678;
+  --color-blush: #CAAA98;
+  --color-light: #F5F0EC;
+
+  /* Derived brand tokens used by components */
+  --color-blush-hover: #b8967f;
+
+  /* Single-use supporting tokens (avoid hex in components). */
+  --color-navy-footer: #161e33;
+  --color-danger: #C0392B;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-navy);
+  color: var(--color-light);
+}
+
+/* Default transition for interactive elements (spec). */
+:where(a, button, input, select, textarea, summary, [role='button']) {
+  transition-property: background-color, border-color, color, box-shadow, transform,
+    opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
