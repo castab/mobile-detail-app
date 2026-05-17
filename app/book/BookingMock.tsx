@@ -41,6 +41,22 @@ export function BookingMock() {
   const [selectedSlot, setSelectedSlot] = useState<string>(
     initialSlot?.label ?? appConfig.copy.bookingPage.timeSlots[0]?.label ?? ''
   )
+  const selectedService = useMemo(
+    () =>
+      appConfig.services.find((service) => service.id === selectedServiceId) ??
+      appConfig.services[0],
+    [selectedServiceId]
+  )
+  const selectedDateLabel = useMemo(
+    () =>
+      new Intl.DateTimeFormat(undefined, {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      }).format(selectedDate),
+    [selectedDate]
+  )
 
   const monthTitle = useMemo(() => {
     return new Intl.DateTimeFormat(undefined, {
@@ -295,6 +311,37 @@ export function BookingMock() {
                 name="notes"
               />
             </label>
+
+            <Card className="md:col-span-2 border-accent/25 bg-primary p-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-label font-bold text-text">
+                    {appConfig.copy.bookingPage.summary.summaryHeading}
+                  </p>
+                  <Badge>{appConfig.copy.bookingPage.steps.step3Label}</Badge>
+                </div>
+                <dl className="grid gap-2 text-sm text-text/85">
+                  <div className="flex items-start justify-between gap-3 border-b border-accent/20 pb-2">
+                    <dt className="font-medium text-text/75">
+                      {appConfig.copy.bookingPage.summary.serviceLabel}
+                    </dt>
+                    <dd className="text-right font-semibold text-text">{selectedService.name}</dd>
+                  </div>
+                  <div className="flex items-start justify-between gap-3 border-b border-accent/20 pb-2">
+                    <dt className="font-medium text-text/75">
+                      {appConfig.copy.bookingPage.summary.dateLabel}
+                    </dt>
+                    <dd className="text-right font-semibold text-text">{selectedDateLabel}</dd>
+                  </div>
+                  <div className="flex items-start justify-between gap-3">
+                    <dt className="font-medium text-text/75">
+                      {appConfig.copy.bookingPage.summary.timeLabel}
+                    </dt>
+                    <dd className="text-right font-semibold text-text">{selectedSlot}</dd>
+                  </div>
+                </dl>
+              </div>
+            </Card>
 
             <div className="md:col-span-2">
               <Button variant="primary" type="button">
