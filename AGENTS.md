@@ -25,9 +25,10 @@ This repository is currently a marketing-first application with an incremental b
 Current architecture rules:
 1. Public marketing pages remain mostly static.
 2. Admin authentication is allowed and expected.
-3. Postgres via Prisma is allowed for admin identity and sessions.
+3. Postgres via Prisma is allowed for admin identity and auth persistence.
 4. Auth.js route handlers are allowed for admin auth.
 5. Booking and customer workflows remain mocked until explicitly implemented.
+6. The current admin credentials flow uses JWT sessions because of Auth.js provider constraints.
 
 ## Tech Stack
 
@@ -45,7 +46,7 @@ Version pins: do not install versions below those minimums. If the package manag
 ## Non-Goals
 
 Do not install or configure out-of-scope backend dependencies:
-1. Customer-facing auth providers beyond the planned admin Auth.js flow
+1. Customer-facing auth providers beyond the current admin Auth.js flow
 2. Email providers (Resend, etc.)
 3. Payments (Stripe, etc.)
 4. Booking/customer API routes unrelated to admin auth
@@ -164,17 +165,24 @@ Requirements:
 /
 ├── app/
 │   ├── layout.tsx
-│   ├── page.tsx
-│   ├── services/page.tsx
-│   ├── book/page.tsx
+│   ├── (marketing)/layout.tsx
+│   ├── (marketing)/page.tsx
+│   ├── (marketing)/services/page.tsx
+│   ├── (marketing)/book/page.tsx
+│   ├── (admin-public)/admin/login/page.tsx
+│   ├── (admin-protected)/admin/layout.tsx
+│   ├── (admin-protected)/admin/page.tsx
 │   └── api/auth/[...nextauth]/route.ts
 ├── components/
+│   ├── admin/
 │   ├── ui/
 │   ├── layout/
 │   └── sections/
 ├── config/app.ts
 ├── lib/
+│   ├── auth/
 │   └── prisma.ts
+├── auth.ts
 ├── prisma/
 │   ├── schema.prisma
 │   └── seed.ts
@@ -198,8 +206,8 @@ Routes:
 1. `/` homepage
 2. `/services` services detail page
 3. `/book` booking page (static mock)
-4. `/admin` protected admin route (planned)
-5. `/admin/login` admin credentials login (planned)
+4. `/admin` protected admin route (implemented shell)
+5. `/admin/login` admin credentials login (implemented)
 
 Booking page is UI-only:
 1. No submission
@@ -210,7 +218,14 @@ Admin auth scope:
 1. Email/password login for admins is allowed.
 2. Credentials are stored in Postgres via Prisma.
 3. Auth.js route handlers may be added under `app/api/auth/`.
-4. JWT sessions are allowed for the admin credentials flow when required by Auth.js provider constraints.
+4. The current credentials flow uses JWT sessions while Prisma remains the source of truth for admin users.
+
+## Current Phase
+
+1. Public marketing routes are implemented and remain mostly static.
+2. Prisma, PostgreSQL, seeded admin credentials, and Auth.js admin login are implemented.
+3. The protected admin dashboard currently exists as a shell for future operational tooling.
+4. Booking submission, customer workflows, and admin data management remain future work.
 
 ## Components
 
@@ -349,6 +364,8 @@ Run:
 docker run --rm -p 3000:3000 \
   -e NEXT_PUBLIC_APP_NAME="<business name>" \
   -e NEXT_PUBLIC_APP_URL="http://localhost:3000" \
+  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/mobile_detail" \
+  -e AUTH_SECRET="<generated secret>" \
   mobile-detail
 ```
 

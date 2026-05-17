@@ -70,25 +70,37 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 ## Where Things Live
 
 - Routes:
-  - `app/page.tsx` (`/`)
-  - `app/services/page.tsx` (`/services`)
-  - `app/book/page.tsx` (`/book`)
-  - `app/api/auth/[...nextauth]/route.ts` (planned next for admin auth)
+  - `app/layout.tsx` (minimal root layout shared by all routes)
+  - `app/(marketing)/layout.tsx` (marketing shell with `Header` and `Footer`)
+  - `app/(marketing)/page.tsx` (`/`)
+  - `app/(marketing)/services/page.tsx` (`/services`)
+  - `app/(marketing)/book/page.tsx` (`/book`)
+  - `app/(admin-public)/admin/login/page.tsx` (`/admin/login`)
+  - `app/(admin-protected)/admin/page.tsx` (`/admin`)
+  - `app/api/auth/[...nextauth]/route.ts` (Auth.js route handler)
 - Primary content/config:
   - `config/app.ts`
 - Database/auth foundation:
   - `prisma/schema.prisma`
   - `prisma/seed.ts`
   - `lib/prisma.ts`
+  - `auth.ts`
+  - `lib/auth/`
   - `docker-compose.yml`
 - Layout:
   - `components/layout/Header.tsx`
   - `components/layout/Nav.tsx` (mobile drawer)
   - `components/layout/Footer.tsx`
+- Admin UI:
+  - `components/admin/AdminLoginForm.tsx`
+  - `components/admin/AdminSignOutButton.tsx`
 - UI primitives (use these instead of ad-hoc elements):
   - `components/ui/Button.tsx`
   - `components/ui/Badge.tsx`
   - `components/ui/Card.tsx`
+- Tests:
+  - `tests/unit/auth/authorize.spec.ts`
+  - `tests/e2e/admin-auth.spec.ts`
 - Styles/tokens:
   - `styles/globals.css` (CSS variables like `--color-primary`, reduced motion, transitions)
   - `tailwind.config.ts` (semantic colors: `primary/secondary/accent/highlight/text`)
@@ -104,7 +116,24 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 - Admin authentication uses Prisma, Postgres, and Auth.js credentials.
 - The current credentials flow uses Auth.js JWT sessions while Prisma remains the source of truth for admin users.
 - Bootstrap admin access is created through `npm run prisma:seed` using `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
-- The protected admin UI is implemented in a later milestone; this phase focuses on the backend groundwork.
+- `/admin/login` is implemented and uses the Auth.js credentials flow.
+- `/admin` is implemented as a protected admin route.
+- The current admin dashboard is a mock shell that marks the next operational tools to build.
+
+## Current Status
+
+- Implemented:
+  - public marketing pages for `/`, `/services`, and `/book`
+  - Prisma + PostgreSQL local development foundation
+  - seeded bootstrap admin credentials
+  - Auth.js credentials login with JWT sessions
+  - protected admin shell at `/admin`
+- Still mocked:
+  - booking submission and persistence
+  - customer-facing workflows
+  - admin operations panels beyond the shell
+- Next likely phase:
+  - database-backed admin tools for services, bookings, customers, or scheduling
 
 ## Local Database
 
@@ -148,6 +177,8 @@ Run:
 docker run --rm -p 3000:3000 \
   -e NEXT_PUBLIC_APP_NAME="<business name>" \
   -e NEXT_PUBLIC_APP_URL="http://localhost:3000" \
+  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/mobile_detail" \
+  -e AUTH_SECRET="<generated secret>" \
   mobile-detail
 ```
 
