@@ -35,13 +35,13 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: cx(
-    'bg-blush text-navy',
-    'hover:bg-[color:var(--color-blush-hover)]',
+    'bg-highlight text-primary',
+    'hover:bg-[color:var(--color-highlight-hover)]',
     'active:scale-[0.97]'
   ),
   ghost: cx(
-    'bg-transparent text-blush border border-taupe/70',
-    'hover:bg-bark hover:border-taupe/50',
+    'bg-transparent text-highlight border border-accent/60',
+    'hover:bg-secondary hover:border-accent/40',
     'active:scale-[0.97]'
   ),
   danger: cx(
@@ -61,7 +61,7 @@ export function Button({
     'inline-flex items-center justify-center gap-2 rounded-md font-bold',
     'cursor-pointer',
     'transition',
-    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight',
     'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
     sizeClasses[size],
     variantClasses[variant],

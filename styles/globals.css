@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 :root {
-  /* Brand tokens (authoritative) */
-  --color-navy: #202940;
-  --color-bark: #4B4038;
-  --color-taupe: #9A8678;
-  --color-blush: #CAAA98;
-  --color-light: #F5F0EC;
+  /* Brand tokens (semantic) */
+  --color-primary: #ECDFCC;
+  --color-secondary: #697565;
+  --color-accent: #3C3D37;
+  --color-highlight: #1E201E;
+  --color-text: #222222;
+
 
   /* Derived brand tokens used by components */
-  --color-blush-hover: #b8967f;
+  /* ~10% darker than highlight */
+  --color-highlight-hover: #1b1d1b;
 
   /* Single-use supporting tokens (avoid hex in components). */
-  --color-navy-footer: #161e33;
   --color-danger: #C0392B;
 }
 
@@ -28,8 +29,8 @@ html {
 }
 
 body {
-  background: var(--color-navy);
-  color: var(--color-light);
+  background: var(--color-primary);
+  color: var(--color-text);
 }
 
 /* Default transition for interactive elements (spec). */

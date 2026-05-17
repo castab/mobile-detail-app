@@ -23,10 +23,10 @@ describe('Button', () => {
 
   it('applies correct classes for each variant', () => {
     const { rerender } = render(<Button variant="primary">A</Button>)
-    expect(screen.getByRole('button', { name: 'A' }).className).toContain('bg-blush')
+    expect(screen.getByRole('button', { name: 'A' }).className).toContain('bg-highlight')
 
     rerender(<Button variant="ghost">A</Button>)
-    expect(screen.getByRole('button', { name: 'A' }).className).toContain('border-taupe')
+    expect(screen.getByRole('button', { name: 'A' }).className).toContain('border-accent')
 
     rerender(<Button variant="danger">A</Button>)
     expect(screen.getByRole('button', { name: 'A' }).className).toContain('var(--color-danger)')

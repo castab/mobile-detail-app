@@ -7,9 +7,9 @@ export type BadgeProps = ComponentPropsWithoutRef<'span'> & {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: 'border-taupe/40 text-taupe',
-  success: 'border-blush/50 text-blush',
-  warning: 'border-taupe/50 text-light/90',
+  default: 'border-accent/30 text-accent',
+  success: 'border-highlight/40 text-highlight',
+  warning: 'border-accent/30 text-text/80',
   danger: 'border-[color:var(--color-danger)] text-[color:var(--color-danger)]',
 }
 
@@ -18,7 +18,7 @@ export function Badge({ variant = 'default', className, ...props }: BadgeProps) 
     <span
       className={[
         'inline-flex items-center rounded-md border px-3 py-1 text-xs font-medium tracking-wide',
-        'bg-bark/30',
+        'bg-secondary/60',
         variantClasses[variant],
         className,
       ]

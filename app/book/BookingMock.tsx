@@ -60,7 +60,7 @@ export function BookingMock() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-h2 font-bold tracking-tight text-light md:text-h1">
+      <h1 className="text-h2 font-bold tracking-tight text-text md:text-h1">
         {appConfig.copy.bookingPage.heading}
       </h1>
 
@@ -68,7 +68,7 @@ export function BookingMock() {
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <Badge>{appConfig.copy.bookingPage.steps.step1Label}</Badge>
-            <h2 className="text-lg font-bold text-light">
+            <h2 className="text-lg font-bold text-text">
               {appConfig.copy.bookingPage.steps.step1Heading}
             </h2>
           </div>
@@ -82,11 +82,11 @@ export function BookingMock() {
                   type="button"
                   className={[
                     'text-left rounded-lg border p-6 transition-colors',
-                    'bg-navy shadow-raised',
+                    'bg-primary shadow-raised',
                     selected
-                      ? 'border-blush bg-blush/5'
-                      : 'border-taupe/30 hover:border-taupe/60',
-                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
+                      ? 'border-highlight bg-highlight/5'
+                      : 'border-accent/20 hover:border-accent/35',
+                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight',
                     'active:scale-[0.97]',
                     'hover:-translate-y-0.5 hover:shadow-overlay transition-[transform,box-shadow] duration-200 ease',
                   ].join(' ')}
@@ -94,13 +94,13 @@ export function BookingMock() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="text-base font-bold text-light">
+                      <div className="text-base font-bold text-text">
                         {service.name}
                       </div>
-                      <div className="mt-2 text-sm leading-6 text-taupe">
+                      <div className="mt-2 text-sm leading-6 text-text/75">
                         {service.description}
                       </div>
-                      <div className="mt-3 text-sm text-light/90">
+                      <div className="mt-3 text-sm text-text/80">
                         {service.duration} min
                       </div>
                     </div>
@@ -108,7 +108,7 @@ export function BookingMock() {
                       aria-hidden
                       className={[
                         'mt-1 h-3 w-3 rounded-full border',
-                        selected ? 'border-blush bg-blush' : 'border-taupe/60',
+                        selected ? 'border-highlight bg-highlight' : 'border-accent/30',
                       ].join(' ')}
                     />
                   </div>
@@ -123,16 +123,16 @@ export function BookingMock() {
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <Badge>{appConfig.copy.bookingPage.steps.step2Label}</Badge>
-            <h2 className="text-lg font-bold text-light">
+            <h2 className="text-lg font-bold text-text">
               {appConfig.copy.bookingPage.steps.step2Heading}
             </h2>
           </div>
 
-          <div className="rounded-lg border border-taupe/30 bg-bark/30 p-4">
+          <div className="rounded-lg border border-accent/20 bg-secondary/60 p-4">
             <div className="flex items-center justify-between gap-3">
               <button
                 type="button"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-taupe/40 text-light/90 hover:bg-bark/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush active:scale-[0.97]"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-accent/25 text-text/80 hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight active:scale-[0.97]"
                 aria-label={appConfig.copy.a11y.calendarPreviousMonth}
                 onClick={() =>
                   setVisibleMonth((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))
@@ -140,10 +140,10 @@ export function BookingMock() {
               >
                 <span aria-hidden>‹</span>
               </button>
-              <div className="text-sm font-bold text-light">{monthTitle}</div>
+              <div className="text-sm font-bold text-text">{monthTitle}</div>
               <button
                 type="button"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-taupe/40 text-light/90 hover:bg-bark/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush active:scale-[0.97]"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-accent/25 text-text/80 hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight active:scale-[0.97]"
                 aria-label={appConfig.copy.a11y.calendarNextMonth}
                 onClick={() =>
                   setVisibleMonth((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1))
@@ -155,7 +155,7 @@ export function BookingMock() {
 
             <div className="mt-4 w-full overflow-x-auto overscroll-x-contain md:flex md:justify-center md:overflow-x-visible">
               <div className="inline-block min-w-max">
-                <div className="grid grid-cols-[repeat(7,48px)] justify-center gap-2 text-center text-xs text-taupe md:justify-center">
+                <div className="grid grid-cols-[repeat(7,48px)] justify-center gap-2 text-center text-xs text-text/70 md:justify-center">
                   {appConfig.copy.bookingPage.calendar.weekdaysShort.map((d, idx) => (
                     <div key={`${d}-${idx}`} className="py-1">
                       {d}
@@ -178,11 +178,11 @@ export function BookingMock() {
                         type="button"
                         className={[
                           'h-12 w-12 rounded-md border text-label',
-                          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
+                          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight',
                           'active:scale-[0.97]',
                           selected
-                            ? 'border-blush bg-blush text-navy'
-                            : 'border-taupe/40 bg-navy text-light hover:border-taupe/70',
+                            ? 'border-highlight bg-highlight text-primary'
+                            : 'border-accent/25 bg-primary text-text hover:border-accent/40',
                         ].join(' ')}
                         aria-pressed={selected}
                         onClick={() => setSelectedDate(date)}
@@ -207,13 +207,13 @@ export function BookingMock() {
                   disabled={disabled}
                   className={[
                     'rounded-md border px-5 py-3 text-label font-bold min-h-12 transition-colors',
-                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush',
+                    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight',
                     'active:scale-[0.97]',
                     disabled
-                      ? 'cursor-not-allowed border-taupe/20 bg-bark/20 text-taupe/60'
+                      ? 'cursor-not-allowed border-accent/10 bg-secondary/40 text-text/40'
                       : selected
-                        ? 'border-blush bg-blush text-navy'
-                        : 'border-taupe/50 bg-navy text-light hover:bg-bark/40',
+                        ? 'border-highlight bg-highlight text-primary'
+                        : 'border-accent/25 bg-primary text-text hover:bg-secondary',
                   ].join(' ')}
                   onClick={() => setSelectedSlot(slot.label)}
                 >
@@ -229,45 +229,45 @@ export function BookingMock() {
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <Badge>{appConfig.copy.bookingPage.steps.step3Label}</Badge>
-            <h2 className="text-lg font-bold text-light">
+            <h2 className="text-lg font-bold text-text">
               {appConfig.copy.bookingPage.steps.step3Heading}
             </h2>
           </div>
 
           <form className="grid gap-4 md:grid-cols-2">
-            <label className="grid gap-2 text-label font-medium text-light/90">
+            <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.fullName}
               <input
-                className="h-12 rounded-md border border-taupe bg-bark px-4 text-light placeholder:text-taupe focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="fullName"
                 autoComplete="name"
               />
             </label>
 
-            <label className="grid gap-2 text-label font-medium text-light/90">
+            <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.email}
               <input
-                className="h-12 rounded-md border border-taupe bg-bark px-4 text-light placeholder:text-taupe focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="email"
                 type="email"
                 autoComplete="email"
               />
             </label>
 
-            <label className="grid gap-2 text-label font-medium text-light/90">
+            <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.phone}
               <input
-                className="h-12 rounded-md border border-taupe bg-bark px-4 text-light placeholder:text-taupe focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="phone"
                 type="tel"
                 autoComplete="tel"
               />
             </label>
 
-            <label className="grid gap-2 text-label font-medium text-light/90">
+            <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.vehicleType}
               <select
-                className="h-12 rounded-md border border-taupe bg-bark px-4 text-light focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="vehicleType"
                 defaultValue={appConfig.copy.bookingPage.form.vehicleTypes[0]}
               >
@@ -279,19 +279,19 @@ export function BookingMock() {
               </select>
             </label>
 
-            <label className="md:col-span-2 grid gap-2 text-label font-medium text-light/90">
+            <label className="md:col-span-2 grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.address}
               <input
-                className="h-12 rounded-md border border-taupe bg-bark px-4 text-light placeholder:text-taupe focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="address"
                 autoComplete="street-address"
               />
             </label>
 
-            <label className="md:col-span-2 grid gap-2 text-label font-medium text-light/90">
+            <label className="md:col-span-2 grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.additionalNotes}
               <textarea
-                className="min-h-28 rounded-md border border-taupe bg-bark px-4 py-3 text-light placeholder:text-taupe focus:border-blush focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(202,170,152,0.2)]"
+                className="min-h-28 rounded-md border border-accent/25 bg-secondary px-4 py-3 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="notes"
               />
             </label>

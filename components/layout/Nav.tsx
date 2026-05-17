@@ -7,6 +7,7 @@ import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
 
 import { appConfig } from '@/config/app'
 import type { AppNavItem } from '@/config/app'
+import { Button } from '@/components/ui/Button'
 
 export type NavProps = {
   items: readonly AppNavItem[]
@@ -127,7 +128,7 @@ export function Nav({ items }: NavProps) {
           <Link
             key={item.href}
             href={item.href}
-            className="text-sm font-medium text-light/90 hover:text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blush"
+            className="text-sm font-medium text-text/90 hover:text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-highlight"
           >
             {item.label}
           </Link>
@@ -137,7 +138,7 @@ export function Nav({ items }: NavProps) {
       <button
         type="button"
         ref={toggleButtonRef}
-        className="md:hidden inline-flex h-12 w-12 items-center justify-center rounded-md border border-taupe/50 text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush touch-manipulation select-none"
+        className="md:hidden inline-flex h-12 w-12 items-center justify-center rounded-md border border-accent/35 text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight touch-manipulation select-none"
         aria-label={
           open ? appConfig.copy.a11y.menuCloseLabel : appConfig.copy.a11y.menuOpenLabel
         }
@@ -162,12 +163,12 @@ export function Nav({ items }: NavProps) {
               ].join(' ')}
               aria-hidden={!open}
             >
-              <button
-                type="button"
-                className={[
-                  'absolute inset-0 bg-black/50 transition-opacity duration-[250ms] ease',
-                  open ? 'opacity-100' : 'opacity-0',
-                ].join(' ')}
+            <button
+              type="button"
+              className={[
+                'absolute inset-0 bg-black/50 transition-opacity duration-[250ms] ease',
+                open ? 'opacity-100' : 'opacity-0',
+              ].join(' ')}
                 aria-label={appConfig.copy.a11y.menuOverlayCloseLabel}
                 onClick={closeDrawer}
               />
@@ -178,7 +179,7 @@ export function Nav({ items }: NavProps) {
                 role="dialog"
                 aria-modal="true"
                 className={[
-                  'absolute right-0 top-0 h-full w-[min(20rem,85vw)] border-l border-taupe/30 bg-[color:var(--color-navy-footer)] shadow-overlay',
+                  'absolute right-0 top-0 h-full w-[min(20rem,85vw)] border-l border-accent/20 bg-secondary shadow-overlay',
                   'transition-transform duration-[250ms] ease will-change-transform',
                   open ? 'translate-x-0' : 'translate-x-full',
                 ].join(' ')}
@@ -191,13 +192,13 @@ export function Nav({ items }: NavProps) {
                   }
                 }}
               >
-                <div className="flex items-center justify-between border-b border-taupe/30 px-5 py-4">
-                  <div className="text-label font-bold tracking-wide text-light">
+                <div className="flex items-center justify-between border-b border-accent/20 px-5 py-4">
+                  <div className="text-label font-bold tracking-wide text-text">
                     {appConfig.name}
                   </div>
                   <button
                     type="button"
-                    className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-taupe/50 text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush"
+                    className="inline-flex h-12 w-12 items-center justify-center rounded-md border border-accent/35 text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
                     aria-label={appConfig.copy.a11y.menuCloseLabel}
                     onClick={closeDrawer}
                   >
@@ -207,16 +208,18 @@ export function Nav({ items }: NavProps) {
                   </button>
                 </div>
 
-                <div className="flex flex-col p-4">
+                <div className="flex flex-col gap-2 p-4">
                   {items.map((item) => (
-                    <Link
+                    <Button
                       key={item.href}
                       href={item.href}
-                      className="rounded-md px-4 py-4 text-label font-medium text-light/90 hover:bg-bark hover:text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush"
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
                       onClick={closeDrawer}
                     >
                       {item.label}
-                    </Link>
+                    </Button>
                   ))}
                 </div>
               </div>

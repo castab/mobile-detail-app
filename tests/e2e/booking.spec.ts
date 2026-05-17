@@ -11,7 +11,7 @@ test('booking: page renders all steps and form elements', async ({ page }) => {
   // Step 1: first service card selected state (blush border).
   const exteriorButton = page.getByRole('button', { name: /Exterior Wash/ })
   await expect(exteriorButton).toBeVisible()
-  await expect(exteriorButton).toHaveClass(/border-blush/)
+  await expect(exteriorButton).toHaveClass(/border-highlight/)
 
   // Step 2: calendar and slots.
   await expect(page.getByText(/\w+ \d{4}/)).toBeVisible()

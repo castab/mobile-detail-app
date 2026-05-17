@@ -14,9 +14,9 @@ function categoryLabel(category: (typeof appConfig.services)[number]['category']
 
 export default function ServicesPage() {
   return (
-    <div className="bg-navy">
+    <div className="bg-primary">
       <div className="mx-auto max-w-page px-5 py-10 md:py-16">
-        <h1 className="text-h2 font-bold tracking-tight text-light md:text-h1">
+        <h1 className="text-h2 font-bold tracking-tight text-text md:text-h1">
           {appConfig.copy.servicesPage.heading}
         </h1>
 
@@ -27,13 +27,13 @@ export default function ServicesPage() {
               <Card>
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-2xl">
-                    <h2 className="text-h3 font-bold text-light">
+                    <h2 className="text-h3 font-bold text-text">
                       {service.name}
                     </h2>
-                    <p className="mt-3 text-body text-taupe">
+                    <p className="mt-3 text-body text-text/75">
                       {service.description}
                     </p>
-                    <div className="mt-4 text-label text-light/90">
+                    <div className="mt-4 text-label text-text/80">
                       {service.duration} min
                     </div>
                   </div>
@@ -49,10 +49,10 @@ export default function ServicesPage() {
           ))}
         </div>
 
-        <Card className="mt-10 bg-bark">
+        <Card className="mt-10 bg-secondary">
           <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
             <div>
-              <h2 className="text-xl font-bold text-light">
+              <h2 className="text-h3 font-bold text-text">
                 {appConfig.copy.servicesPage.readyToBookHeading}
               </h2>
             </div>

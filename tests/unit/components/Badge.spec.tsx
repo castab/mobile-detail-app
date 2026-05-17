@@ -11,13 +11,13 @@ describe('Badge', () => {
 
   it('applies correct classes for each variant', () => {
     const { rerender } = render(<Badge variant="default">A</Badge>)
-    expect(screen.getByText('A').className).toContain('text-taupe')
+    expect(screen.getByText('A').className).toContain('text-accent')
 
     rerender(<Badge variant="success">A</Badge>)
-    expect(screen.getByText('A').className).toContain('text-blush')
+    expect(screen.getByText('A').className).toContain('text-highlight')
 
     rerender(<Badge variant="warning">A</Badge>)
-    expect(screen.getByText('A').className).toContain('text-light')
+    expect(screen.getByText('A').className).toContain('text-text')
 
     rerender(<Badge variant="danger">A</Badge>)
     expect(screen.getByText('A').className).toContain('var(--color-danger)')

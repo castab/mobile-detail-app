@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: '#202940',
-        bark: '#4B4038',
-        taupe: '#9A8678',
-        blush: '#CAAA98',
-        light: '#F5F0EC',
+        primary: '#ECDFCC',
+        secondary: '#697565',
+        accent: '#3C3D37',
+        highlight: '#1E201E',
+        text: '#222222',
       },
       borderRadius: {
         // Spec: 12px for cards/containers, 8px for inputs/buttons/badges.
