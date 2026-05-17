@@ -49,7 +49,7 @@ export default function ServicesPage() {
           ))}
         </div>
 
-        <Card className="mt-10 bg-secondary">
+        <Card className="mt-10 bg-transparent">
           <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
             <div>
               <h2 className="text-h3 font-bold text-text">

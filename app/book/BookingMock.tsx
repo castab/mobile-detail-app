@@ -128,7 +128,7 @@ export function BookingMock() {
             </h2>
           </div>
 
-          <div className="rounded-lg border border-accent/20 bg-secondary/60 p-4">
+          <div className="rounded-lg border border-accent/20 bg-transparent p-4">
             <div className="flex items-center justify-between gap-3">
               <button
                 type="button"
@@ -238,7 +238,7 @@ export function BookingMock() {
             <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.fullName}
               <input
-                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="h-12 rounded-md border border-accent/25 bg-primary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="fullName"
                 autoComplete="name"
               />
@@ -247,7 +247,7 @@ export function BookingMock() {
             <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.email}
               <input
-                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="h-12 rounded-md border border-accent/25 bg-primary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -257,7 +257,7 @@ export function BookingMock() {
             <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.phone}
               <input
-                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="h-12 rounded-md border border-accent/25 bg-primary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="phone"
                 type="tel"
                 autoComplete="tel"
@@ -267,7 +267,7 @@ export function BookingMock() {
             <label className="grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.vehicleType}
               <select
-                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="h-12 rounded-md border border-accent/25 bg-primary px-4 text-text focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="vehicleType"
                 defaultValue={appConfig.copy.bookingPage.form.vehicleTypes[0]}
               >
@@ -282,7 +282,7 @@ export function BookingMock() {
             <label className="md:col-span-2 grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.address}
               <input
-                className="h-12 rounded-md border border-accent/25 bg-secondary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="h-12 rounded-md border border-accent/25 bg-primary px-4 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="address"
                 autoComplete="street-address"
               />
@@ -291,7 +291,7 @@ export function BookingMock() {
             <label className="md:col-span-2 grid gap-2 text-label font-medium text-text/90">
               {appConfig.copy.bookingPage.form.additionalNotes}
               <textarea
-                className="min-h-28 rounded-md border border-accent/25 bg-secondary px-4 py-3 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
+                className="min-h-28 rounded-md border border-accent/25 bg-primary px-4 py-3 text-text placeholder:text-text/50 focus:border-highlight focus:outline-none focus:ring-0 focus:shadow-[0_0_0_3px_rgba(27,60,83,0.18)]"
                 name="notes"
               />
             </label>
