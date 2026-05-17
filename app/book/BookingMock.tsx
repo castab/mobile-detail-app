@@ -314,11 +314,10 @@ export function BookingMock() {
 
             <Card className="md:col-span-2 border-accent/25 bg-primary p-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between gap-3">
+                <div>
                   <p className="text-label font-bold text-text">
                     {appConfig.copy.bookingPage.summary.summaryHeading}
                   </p>
-                  <Badge>{appConfig.copy.bookingPage.steps.step3Label}</Badge>
                 </div>
                 <dl className="grid gap-2 text-sm text-text/85">
                   <div className="flex items-start justify-between gap-3 border-b border-accent/20 pb-2">
