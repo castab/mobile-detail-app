@@ -34,7 +34,14 @@ Business name + branding are configurable. Do not hardcode them in UI.
 - Lint: `npm run lint`
 - Typecheck: `npx tsc --noEmit`
 - Unit tests: `npm test`
+- E2E browser install: `npx playwright install`
 - E2E tests: `npm run test:e2e`
+- Vitest UI: `npm run test:ui`
+- Coverage: `npm run test:coverage`
+- Playwright UI: `npm run test:e2e:ui`
+- Playwright report: `npm run test:e2e:report`
+
+Run `npx playwright install` once before the first local e2e run, or after Playwright version upgrades.
 
 Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` / `npx.cmd`.
 
@@ -44,7 +51,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
   - `app/page.tsx` (`/`)
   - `app/services/page.tsx` (`/services`)
   - `app/book/page.tsx` (`/book`)
-- Central content/config (single source of truth):
+- Primary content/config:
   - `config/app.ts`
 - Layout:
   - `components/layout/Header.tsx`

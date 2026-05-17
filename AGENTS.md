@@ -58,7 +58,7 @@ The name and palette are expected to change per business. Code must use semantic
 
 ### Color Tokens
 
-Define semantic CSS custom properties in `styles/globals.css` and map them to Tailwind tokens in `tailwind.config.ts`.
+Define semantic CSS custom properties in `styles/globals.css` and keep the semantic Tailwind tokens in `tailwind.config.ts` aligned with them.
 
 Rules:
 1. No hardcoded hex values in components.
@@ -95,7 +95,7 @@ colors: {
 
 Font: Inter (use `next/font/google`, no `<link>` tag).
 
-Use only this scale (no arbitrary font sizes outside of it):
+Use this scale for primary headings, body copy, labels, and captions. Compact utility text for nav, metadata, and dense controls is acceptable when it improves usability:
 1. `display` 56px/3.5rem, 700, lh 1.1
 2. `h1` 40px/2.5rem, 700, lh 1.2
 3. `h2` 30px/1.875rem, 700, lh 1.3
@@ -182,7 +182,7 @@ Requirements:
 
 ## Central Config (`config/app.ts`)
 
-All user-facing copy and nav definitions live in `config/app.ts`. No content strings scattered across JSX.
+Primary marketing copy, labels, and nav definitions should live in `config/app.ts`. Keep JSX copy to short structural UI text only when centralizing it would add noise.
 
 Note: any fallback name string is a placeholder and should be treated as such.
 
