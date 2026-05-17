@@ -102,6 +102,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 ## Admin Auth Foundation
 
 - Admin authentication uses Prisma, Postgres, and Auth.js credentials.
+- The current credentials flow uses Auth.js JWT sessions while Prisma remains the source of truth for admin users.
 - Bootstrap admin access is created through `npm run prisma:seed` using `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
 - The protected admin UI is implemented in a later milestone; this phase focuses on the backend groundwork.
 

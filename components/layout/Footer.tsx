@@ -31,6 +31,12 @@ export function Footer() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/admin"
+              className="pt-2 text-caption font-medium uppercase tracking-[0.18em] text-text/55 hover:text-text/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-highlight"
+            >
+              {appConfig.copy.footer.adminLinkLabel}
+            </Link>
           </div>
         </div>
 

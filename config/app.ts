@@ -20,6 +20,9 @@ export const appConfig = {
       bookThisService: 'Book This Service',
       confirmBooking: 'Confirm Booking',
     },
+    footer: {
+      adminLinkLabel: 'Admin Console',
+    },
     home: {
       supportingText:
         'Premium mobile detailing for busy schedules. We bring the tools, the care, and the finish right to your driveway.',

@@ -210,7 +210,7 @@ Admin auth scope:
 1. Email/password login for admins is allowed.
 2. Credentials are stored in Postgres via Prisma.
 3. Auth.js route handlers may be added under `app/api/auth/`.
-4. Database-backed sessions are allowed for admin auth.
+4. JWT sessions are allowed for the admin credentials flow when required by Auth.js provider constraints.
 
 ## Components
 

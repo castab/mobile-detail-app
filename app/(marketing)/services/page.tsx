@@ -27,15 +27,9 @@ export default function ServicesPage() {
               <Card>
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-2xl">
-                    <h2 className="text-h3 font-bold text-text">
-                      {service.name}
-                    </h2>
-                    <p className="mt-3 text-body text-text/75">
-                      {service.description}
-                    </p>
-                    <div className="mt-4 text-label text-text/80">
-                      {service.duration} min
-                    </div>
+                    <h2 className="text-h3 font-bold text-text">{service.name}</h2>
+                    <p className="mt-3 text-body text-text/75">{service.description}</p>
+                    <div className="mt-4 text-label text-text/80">{service.duration} min</div>
                   </div>
 
                   <div className="flex flex-col gap-3">

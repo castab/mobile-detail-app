@@ -27,4 +27,8 @@ test('homepage: loads and renders key sections', async ({ page }) => {
 
   // Footer contains app name.
   await expect(page.getByRole('contentinfo').getByText(/^Fresh Finish$/)).toBeVisible()
+  await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Admin Console' })).toHaveAttribute(
+    'href',
+    '/admin'
+  )
 })
