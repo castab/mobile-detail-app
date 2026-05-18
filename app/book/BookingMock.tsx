@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from 'react'
 
-import { appConfig, type AppService, type BookingTimeSlot } from '@/config/app'
+import { appConfig, type BookingTimeSlot } from '@/config/app'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
+import type { ServiceRecord } from '@/lib/services'
 
 function getDaysInMonth(year: number, monthIndex: number) {
   return new Date(year, monthIndex + 1, 0).getDate()
@@ -23,13 +24,14 @@ function isSameDay(a: Date, b: Date) {
   )
 }
 
-export function BookingMock() {
-  const services = appConfig.services
+type BookingMockProps = {
+  services: ServiceRecord[]
+}
+
+export function BookingMock({ services }: BookingMockProps) {
   const today = useMemo(() => new Date(), [])
 
-  const [selectedServiceId, setSelectedServiceId] = useState<AppService['id']>(
-    services[0].id
-  )
+  const [selectedServiceId, setSelectedServiceId] = useState(services[0]?.id ?? '')
   const [visibleMonth, setVisibleMonth] = useState(
     () => new Date(today.getFullYear(), today.getMonth(), 1)
   )
@@ -42,10 +44,8 @@ export function BookingMock() {
     initialSlot?.label ?? appConfig.copy.bookingPage.timeSlots[0]?.label ?? ''
   )
   const selectedService = useMemo(
-    () =>
-      appConfig.services.find((service) => service.id === selectedServiceId) ??
-      appConfig.services[0],
-    [selectedServiceId]
+    () => services.find((service) => service.id === selectedServiceId) ?? services[0] ?? null,
+    [selectedServiceId, services]
   )
   const selectedDateLabel = useMemo(
     () =>
@@ -73,6 +73,22 @@ export function BookingMock() {
   const blanks = Array.from({ length: firstWeekday }, () => null)
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
   const dayButtons = [...blanks, ...days]
+
+  if (services.length === 0 || !selectedService) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-h2 font-bold tracking-tight text-text md:text-h1">
+          {appConfig.copy.bookingPage.heading}
+        </h1>
+
+        <Card>
+          <p className="text-body text-text/75">
+            There are no active services available to book right now. Please check back soon.
+          </p>
+        </Card>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -117,7 +133,7 @@ export function BookingMock() {
                         {service.description}
                       </div>
                       <div className="mt-3 text-sm text-text/80">
-                        {service.duration} min
+                        {service.durationMinutes} min
                       </div>
                     </div>
                     <div

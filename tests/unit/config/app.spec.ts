@@ -13,20 +13,10 @@ describe('appConfig', () => {
     process.env.NEXT_PUBLIC_APP_NAME = original
   })
 
-  it('appConfig.services contains exactly two entries', async () => {
+  it('appConfig.servicesPage exposes labels for both service categories', async () => {
     const { appConfig } = await import('@/config/app')
-    expect(appConfig.services).toHaveLength(2)
-  })
-
-  it('each service has required fields', async () => {
-    const { appConfig } = await import('@/config/app')
-    for (const service of appConfig.services) {
-      expect(service.id).toBeTruthy()
-      expect(service.name).toBeTruthy()
-      expect(service.category).toBeTruthy()
-      expect(service.description).toBeTruthy()
-      expect(service.duration).toBeTypeOf('number')
-    }
+    expect(appConfig.copy.servicesPage.categoryLabels.EXTERIOR_WASH).toBe('Exterior')
+    expect(appConfig.copy.servicesPage.categoryLabels.INTERIOR_CLEANING).toBe('Interior')
   })
 
   it('appConfig.nav contains entries for /services and /book', async () => {

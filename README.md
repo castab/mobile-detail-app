@@ -40,6 +40,8 @@ Business name + branding are configurable. Do not hardcode them in UI.
 8. Open:
    - `http://localhost:3000`
 
+Local development now expects a working Postgres connection. The public marketing pages, booking service selection, and admin routes all load service data server-side from the database.
+
 ## Commands
 
 - Dev: `npm run dev`
@@ -77,6 +79,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
   - `app/(marketing)/book/page.tsx` (`/book`)
   - `app/(admin-public)/admin/login/page.tsx` (`/admin/login`)
   - `app/(admin-protected)/admin/page.tsx` (`/admin`)
+  - `app/(admin-protected)/admin/services/page.tsx` (`/admin/services`)
   - `app/api/auth/[...nextauth]/route.ts` (Auth.js route handler)
 - Primary content/config:
   - `config/app.ts`
@@ -86,6 +89,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
   - `lib/prisma.ts`
   - `auth.ts`
   - `lib/auth/`
+  - `lib/services.ts`
   - `docker-compose.yml`
 - Layout:
   - `components/layout/Header.tsx`
@@ -94,6 +98,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 - Admin UI:
   - `components/admin/AdminLoginForm.tsx`
   - `components/admin/AdminSignOutButton.tsx`
+  - `components/admin/AdminServiceForm.tsx`
 - UI primitives (use these instead of ad-hoc elements):
   - `components/ui/Button.tsx`
   - `components/ui/Badge.tsx`
@@ -118,7 +123,8 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 - Bootstrap admin access is created through `npm run prisma:seed` using `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
 - `/admin/login` is implemented and uses the Auth.js credentials flow.
 - `/admin` is implemented as a protected admin route.
-- The current admin dashboard is a mock shell that marks the next operational tools to build.
+- `/admin/services` is implemented for creating, editing, and disabling services.
+- Service records are stored in Postgres and server-rendered into the marketing site and booking flow.
 
 ## Current Status
 
@@ -128,10 +134,12 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
   - seeded bootstrap admin credentials
   - Auth.js credentials login with JWT sessions
   - protected admin shell at `/admin`
+  - admin service management at `/admin/services`
+  - server-rendered service data shared across homepage, services page, and booking page
 - Still mocked:
   - booking submission and persistence
   - customer-facing workflows
-  - admin operations panels beyond the shell
+  - bookings, customers, and scheduling admin tooling
 - Next likely phase:
   - database-backed admin tools for services, bookings, customers, or scheduling
 
@@ -139,6 +147,7 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 
 - Local development uses `docker-compose.yml` to run PostgreSQL 18 on `localhost:5432`.
 - The Next.js app and Prisma CLI still run on the host machine in this phase.
+- Local development requires `DATABASE_URL` and `AUTH_SECRET`; without them, the public pages and admin auth will fail fast.
 - Default local credentials match `.env.example`:
   - database: `mobile_detail`
   - user: `postgres`

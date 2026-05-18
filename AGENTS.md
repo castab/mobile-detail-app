@@ -172,6 +172,7 @@ Requirements:
 │   ├── (admin-public)/admin/login/page.tsx
 │   ├── (admin-protected)/admin/layout.tsx
 │   ├── (admin-protected)/admin/page.tsx
+│   ├── (admin-protected)/admin/services/page.tsx
 │   └── api/auth/[...nextauth]/route.ts
 ├── components/
 │   ├── admin/
@@ -208,6 +209,7 @@ Routes:
 3. `/book` booking page (static mock)
 4. `/admin` protected admin route (implemented shell)
 5. `/admin/login` admin credentials login (implemented)
+6. `/admin/services` protected service management route (implemented)
 
 Booking page is UI-only:
 1. No submission
@@ -224,8 +226,9 @@ Admin auth scope:
 
 1. Public marketing routes are implemented and remain mostly static.
 2. Prisma, PostgreSQL, seeded admin credentials, and Auth.js admin login are implemented.
-3. The protected admin dashboard currently exists as a shell for future operational tooling.
-4. Booking submission, customer workflows, and admin data management remain future work.
+3. Service records are stored in Postgres and rendered server-side into the homepage, services page, and booking page.
+4. The protected admin dashboard includes service management for creating, editing, and disabling services.
+5. Booking submission, customer workflows, and broader admin data management remain future work.
 
 ## Components
 

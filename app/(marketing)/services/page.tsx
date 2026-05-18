@@ -1,18 +1,20 @@
+import type { ServiceCategory } from '@prisma/client'
+
 import { appConfig } from '@/config/app'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
+import { getPublicServices } from '@/lib/services'
 
-function categoryLabel(category: (typeof appConfig.services)[number]['category']) {
-  switch (category) {
-    case 'EXTERIOR_WASH':
-      return appConfig.copy.servicesPage.exteriorLabel
-    case 'INTERIOR_CLEANING':
-      return appConfig.copy.servicesPage.interiorLabel
-  }
+export const dynamic = 'force-dynamic'
+
+function categoryLabel(category: ServiceCategory) {
+  return appConfig.copy.servicesPage.categoryLabels[category]
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getPublicServices()
+
   return (
     <div className="bg-primary">
       <div className="mx-auto max-w-page px-5 py-10 md:py-16">
@@ -21,7 +23,7 @@ export default function ServicesPage() {
         </h1>
 
         <div className="mt-8 space-y-5">
-          {appConfig.services.map((service) => (
+          {services.map((service) => (
             <div key={service.id} className="space-y-3">
               <Badge>{categoryLabel(service.category)}</Badge>
               <Card>
@@ -29,7 +31,7 @@ export default function ServicesPage() {
                   <div className="max-w-2xl">
                     <h2 className="text-h3 font-bold text-text">{service.name}</h2>
                     <p className="mt-3 text-body text-text/75">{service.description}</p>
-                    <div className="mt-4 text-label text-text/80">{service.duration} min</div>
+                    <div className="mt-4 text-label text-text/80">{service.durationMinutes} min</div>
                   </div>
 
                   <div className="flex flex-col gap-3">
@@ -41,6 +43,14 @@ export default function ServicesPage() {
               </Card>
             </div>
           ))}
+
+          {services.length === 0 ? (
+            <Card>
+              <p className="text-body text-text/75">
+                No services are currently available for booking. Please check back soon.
+              </p>
+            </Card>
+          ) : null}
         </div>
 
         <Card className="mt-10 bg-transparent">

@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { AdminSignOutButton } from '@/components/admin/AdminSignOutButton'
 
@@ -17,6 +19,20 @@ export default async function AdminLayout({
               Admin Console
             </p>
             <h1 className="mt-1 text-h3 font-bold text-text">Operations Dashboard</h1>
+            <nav className="mt-3 flex flex-wrap gap-4 text-label text-text/75">
+              <Link
+                href="/admin"
+                className="transition hover:text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/admin/services"
+                className="transition hover:text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
+              >
+                Services
+              </Link>
+            </nav>
           </div>
 
           <div className="flex items-center gap-4">

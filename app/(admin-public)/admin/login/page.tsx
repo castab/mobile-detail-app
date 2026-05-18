@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation'
 
-import { auth } from '@/auth'
 import { AdminLoginForm } from '@/components/admin/AdminLoginForm'
 import { Card } from '@/components/ui/Card'
+import { getSessionOrReset } from '@/lib/auth/get-session'
 
 export default async function AdminLoginPage() {
-  const session = await auth()
+  const session = await getSessionOrReset()
 
   if (session?.user?.role === 'ADMIN') {
     redirect('/admin')

@@ -18,7 +18,7 @@ test('homepage: loads and renders key sections', async ({ page }) => {
     '/services'
   )
 
-  // Services Preview renders exactly two service cards.
+  // Services Preview renders the seeded services.
   const serviceHeadings = page.getByRole('heading', { name: /Exterior Wash|Interior Cleaning/ })
   await expect(serviceHeadings).toHaveCount(2)
 

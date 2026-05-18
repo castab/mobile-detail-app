@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 
@@ -16,6 +17,7 @@ const dashboardSections = [
     title: 'Services',
     status: 'Next',
     description: 'Tune packages, pricing, and add-on options without touching the marketing site.',
+    href: '/admin/services',
   },
   {
     title: 'Bookings',
@@ -42,6 +44,13 @@ export default function AdminDashboardPage() {
               <Badge>{section.status}</Badge>
             </div>
             <p className="mt-4 text-body text-text/72">{section.description}</p>
+            {'href' in section ? (
+              <div className="mt-6">
+                <Button href={section.href} variant="ghost" size="sm">
+                  Open {section.title}
+                </Button>
+              </div>
+            ) : null}
           </Card>
         ))}
       </section>
