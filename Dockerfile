@@ -48,6 +48,9 @@ ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
+# Regenerate Prisma Client after the schema is available in the image.
+RUN npx prisma generate
+
 # Build Next.js application
 # If you want to speed up Docker rebuilds, you can cache the build artifacts
 # by adding: --mount=type=cache,target=/app/.next/cache
@@ -85,10 +88,14 @@ ENV HOSTNAME="0.0.0.0"
 
 # Copy production assets
 COPY --from=builder --chown=node:node /app/public ./public
+COPY --from=builder --chown=node:node /app/prisma ./prisma
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules
+COPY --from=builder --chown=node:node /app/docker-entrypoint.sh ./docker-entrypoint.sh
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown node:node .next
+RUN chmod +x docker-entrypoint.sh
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -105,5 +112,5 @@ USER node
 # Expose port 3000 to allow HTTP traffic
 EXPOSE 3000
 
-# Start Next.js standalone server
-CMD ["node", "server.js"]
+# Apply Prisma migrations, then start the standalone server.
+CMD ["./docker-entrypoint.sh"]
