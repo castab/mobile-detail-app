@@ -18,7 +18,7 @@ test('homepage: loads and renders key sections', async ({ page }) => {
     '/services'
   )
 
-  // Services Preview renders exactly two service cards.
+  // Services Preview renders the seeded services.
   const serviceHeadings = page.getByRole('heading', { name: /Exterior Wash|Interior Cleaning/ })
   await expect(serviceHeadings).toHaveCount(2)
 
@@ -27,4 +27,8 @@ test('homepage: loads and renders key sections', async ({ page }) => {
 
   // Footer contains app name.
   await expect(page.getByRole('contentinfo').getByText(/^Fresh Finish$/)).toBeVisible()
+  await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Admin Console' })).toHaveAttribute(
+    'href',
+    '/admin'
+  )
 })

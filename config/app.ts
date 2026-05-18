@@ -20,6 +20,9 @@ export const appConfig = {
       bookThisService: 'Book This Service',
       confirmBooking: 'Confirm Booking',
     },
+    footer: {
+      adminLinkLabel: 'Admin Console',
+    },
     home: {
       supportingText:
         'Premium mobile detailing for busy schedules. We bring the tools, the care, and the finish right to your driveway.',
@@ -49,8 +52,10 @@ export const appConfig = {
     },
     servicesPage: {
       heading: 'Our Services',
-      exteriorLabel: 'Exterior',
-      interiorLabel: 'Interior',
+      categoryLabels: {
+        EXTERIOR_WASH: 'Exterior',
+        INTERIOR_CLEANING: 'Interior',
+      },
       readyToBookHeading: 'Ready to book?',
     },
     bookingPage: {
@@ -94,28 +99,7 @@ export const appConfig = {
     { label: 'Services', href: '/services' },
     { label: 'Book Now', href: '/book' },
   ],
-  services: [
-    {
-      id: 'exterior-wash',
-      name: 'Exterior Wash',
-      category: 'EXTERIOR_WASH',
-      description:
-        "A thorough exterior clean that restores your vehicle's shine. Includes hand wash, wheel cleaning, and a streak-free rinse.",
-      duration: 60,
-      price: 0,
-    },
-    {
-      id: 'interior-cleaning',
-      name: 'Interior Cleaning',
-      category: 'INTERIOR_CLEANING',
-      description:
-        'A deep interior refresh covering vacuuming, surface wipe-down, window cleaning, and odor elimination.',
-      duration: 90,
-      price: 0,
-    },
-  ],
 } as const
 
 export type AppNavItem = (typeof appConfig.nav)[number]
-export type AppService = (typeof appConfig.services)[number]
 export type BookingTimeSlot = (typeof appConfig.copy.bookingPage.timeSlots)[number]

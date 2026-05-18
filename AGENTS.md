@@ -6,7 +6,7 @@ This version has breaking changes. APIs, conventions, and file structure may dif
 Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# Mobile Detailing UI Shell — Agent Directive
+# Mobile Detailing App — Agent Directive
 
 This file is the authoritative specification for AI agents (opencode or otherwise) working in this repository. Follow every section precisely.
 
@@ -20,13 +20,15 @@ Rules:
 1. Never hardcode the business/app name directly in UI or metadata.
 2. Reference it exclusively via `NEXT_PUBLIC_APP_NAME` and/or `config/app.ts`.
 
-This repository is intentionally a static UI shell:
-1. No backend.
-2. No database.
-3. No auth.
-4. No API calls.
+This repository is currently a marketing-first application with an incremental backend rollout.
 
-All data is hardcoded or mocked. This exists to lock in look and feel before wiring any business logic.
+Current architecture rules:
+1. Public marketing pages remain mostly static.
+2. Admin authentication is allowed and expected.
+3. Postgres via Prisma is allowed for admin identity and auth persistence.
+4. Auth.js route handlers are allowed for admin auth.
+5. Booking and customer workflows remain mocked until explicitly implemented.
+6. The current admin credentials flow uses JWT sessions because of Auth.js provider constraints.
 
 ## Tech Stack
 
@@ -43,12 +45,11 @@ Version pins: do not install versions below those minimums. If the package manag
 
 ## Non-Goals
 
-Do not install or configure any backend dependencies (UI shell):
-1. Prisma or a database driver
-2. Auth providers (NextAuth, etc.)
-3. Email providers (Resend, etc.)
-4. Payments (Stripe, etc.)
-5. API routes
+Do not install or configure out-of-scope backend dependencies:
+1. Customer-facing auth providers beyond the current admin Auth.js flow
+2. Email providers (Resend, etc.)
+3. Payments (Stripe, etc.)
+4. Booking/customer API routes unrelated to admin auth
 
 ## Brand & Design System
 
@@ -58,7 +59,7 @@ The name and palette are expected to change per business. Code must use semantic
 
 ### Color Tokens
 
-Define semantic CSS custom properties in `styles/globals.css` and map them to Tailwind tokens in `tailwind.config.ts`.
+Define semantic CSS custom properties in `styles/globals.css` and keep the semantic Tailwind tokens in `tailwind.config.ts` aligned with them.
 
 Rules:
 1. No hardcoded hex values in components.
@@ -95,7 +96,7 @@ colors: {
 
 Font: Inter (use `next/font/google`, no `<link>` tag).
 
-Use only this scale (no arbitrary font sizes outside of it):
+Use this scale for primary headings, body copy, labels, and captions. Compact utility text for nav, metadata, and dense controls is acceptable when it improves usability:
 1. `display` 56px/3.5rem, 700, lh 1.1
 2. `h1` 40px/2.5rem, 700, lh 1.2
 3. `h2` 30px/1.875rem, 700, lh 1.3
@@ -164,14 +165,28 @@ Requirements:
 /
 ├── app/
 │   ├── layout.tsx
-│   ├── page.tsx
-│   ├── services/page.tsx
-│   └── book/page.tsx
+│   ├── (marketing)/layout.tsx
+│   ├── (marketing)/page.tsx
+│   ├── (marketing)/services/page.tsx
+│   ├── (marketing)/book/page.tsx
+│   ├── (admin-public)/admin/login/page.tsx
+│   ├── (admin-protected)/admin/layout.tsx
+│   ├── (admin-protected)/admin/page.tsx
+│   ├── (admin-protected)/admin/services/page.tsx
+│   └── api/auth/[...nextauth]/route.ts
 ├── components/
+│   ├── admin/
 │   ├── ui/
 │   ├── layout/
 │   └── sections/
 ├── config/app.ts
+├── lib/
+│   ├── auth/
+│   └── prisma.ts
+├── auth.ts
+├── prisma/
+│   ├── schema.prisma
+│   └── seed.ts
 ├── styles/globals.css
 ├── tests/
 │   ├── unit/
@@ -182,7 +197,7 @@ Requirements:
 
 ## Central Config (`config/app.ts`)
 
-All user-facing copy and nav definitions live in `config/app.ts`. No content strings scattered across JSX.
+Primary marketing copy, labels, and nav definitions should live in `config/app.ts`. Keep JSX copy to short structural UI text only when centralizing it would add noise.
 
 Note: any fallback name string is a placeholder and should be treated as such.
 
@@ -192,11 +207,28 @@ Routes:
 1. `/` homepage
 2. `/services` services detail page
 3. `/book` booking page (static mock)
+4. `/admin` protected admin route (implemented shell)
+5. `/admin/login` admin credentials login (implemented)
+6. `/admin/services` protected service management route (implemented)
 
 Booking page is UI-only:
 1. No submission
 2. No validation beyond basic HTML constraints
 3. No API calls
+
+Admin auth scope:
+1. Email/password login for admins is allowed.
+2. Credentials are stored in Postgres via Prisma.
+3. Auth.js route handlers may be added under `app/api/auth/`.
+4. The current credentials flow uses JWT sessions while Prisma remains the source of truth for admin users.
+
+## Current Phase
+
+1. Public marketing routes are implemented and remain mostly static.
+2. Prisma, PostgreSQL, seeded admin credentials, and Auth.js admin login are implemented.
+3. Service records are stored in Postgres and rendered server-side into the homepage, services page, and booking page.
+4. The protected admin dashboard includes service management for creating, editing, and disabling services.
+5. Booking submission, customer workflows, and broader admin data management remain future work.
 
 ## Components
 
@@ -248,6 +280,16 @@ Rules:
 # App
 NEXT_PUBLIC_APP_NAME=""   # Business name (branding)
 NEXT_PUBLIC_APP_URL=""    # e.g. http://localhost:3000
+
+# Database
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/mobile_detail"
+
+# Auth
+AUTH_SECRET=""
+
+# Seeded Admin
+ADMIN_EMAIL=""
+ADMIN_PASSWORD=""
 ```
 
 ```bash
@@ -255,15 +297,26 @@ NEXT_PUBLIC_APP_URL=""    # e.g. http://localhost:3000
 
 NEXT_PUBLIC_APP_NAME="<business name>"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/mobile_detail"
+AUTH_SECRET="<generated secret>"
+ADMIN_EMAIL="owner@example.com"
+ADMIN_PASSWORD="<strong password>"
 ```
 
 ## Local Dev Commands
 
 ```bash
+docker compose up -d
+docker compose down
 npm run dev
 npm run build
 npm run start
 npm run lint
+npm run prisma:generate
+npm run prisma:migrate:dev
+npm run prisma:migrate:deploy
+npm run prisma:seed
+npm run prisma:studio
 npx tsc --noEmit
 npm test
 npm run test:e2e
@@ -295,10 +348,14 @@ Options:
 Environment variables required at runtime:
 1. `NEXT_PUBLIC_APP_NAME`
 2. `NEXT_PUBLIC_APP_URL`
+3. `DATABASE_URL`
+4. `AUTH_SECRET`
 
 ## Docker
 
 This repo includes a multi-stage `Dockerfile` that builds Next.js in `standalone` mode and runs the app with `node server.js`.
+
+For local development, use `docker-compose.yml` to run PostgreSQL 18 on `localhost:5432`. The Next.js app still runs on the host machine during this phase.
 
 Build:
 ```bash
@@ -310,6 +367,8 @@ Run:
 docker run --rm -p 3000:3000 \
   -e NEXT_PUBLIC_APP_NAME="<business name>" \
   -e NEXT_PUBLIC_APP_URL="http://localhost:3000" \
+  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/mobile_detail" \
+  -e AUTH_SECRET="<generated secret>" \
   mobile-detail
 ```
 
@@ -320,7 +379,6 @@ docker run --rm -p 3000:3000 \
 1. Booking form submission and validation.
 2. Availability calendar with real date logic.
 3. API routes for bookings.
-4. Database + Prisma setup.
 
 ### Customer Identity & Magic Links
 
@@ -330,8 +388,9 @@ docker run --rm -p 3000:3000 \
 
 ### Admin Dashboard
 
-1. Protected admin route.
-2. Booking management and blocked dates.
+1. Booking management and blocked dates.
+2. Customer management.
+3. Service management.
 
 ### Email & Notifications
 
