@@ -7,7 +7,12 @@
 # To ensure security and compatibility, regularly update the NODE_VERSION ARG to the latest LTS version.
 ARG NODE_VERSION=24.13.0-slim
 
-FROM node:${NODE_VERSION} AS dependencies
+FROM node:${NODE_VERSION} AS base
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+FROM base AS dependencies
 
 # Set working directory
 WORKDIR /app
@@ -30,7 +35,7 @@ RUN if [ -f package-lock.json ]; then \
 # Stage 2: Build Next.js application in standalone mode
 # ============================================
 
-FROM node:${NODE_VERSION} AS builder
+FROM base AS builder
 
 # Set working directory
 WORKDIR /app
@@ -71,7 +76,7 @@ RUN if [ -f package-lock.json ]; then \
 # Stage 3: Run Next.js application
 # ============================================
 
-FROM node:${NODE_VERSION} AS runner
+FROM base AS runner
 
 # Set working directory
 WORKDIR /app
