@@ -101,15 +101,6 @@ jobs:
       - name: Wait for Postgres
         run: timeout 30 bash -c 'until echo > /dev/tcp/localhost/5432; do sleep 2; done'
 
-      - name: Prisma Generate
-        run: npm run prisma:generate
-
-      - name: Prisma Migrate
-        run: npm run prisma:migrate:deploy
-
-      - name: Prisma Seed
-        run: npm run prisma:seed
-
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
