@@ -156,8 +156,9 @@ Note for Windows PowerShell: if `npm`/`npx` scripts are blocked, use `npm.cmd` /
 ## CI
 
 GitHub Actions:
-- On PRs: `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm test`
-- On pushes to `main`: Playwright e2e runs (`npm run test:e2e`)
+- On PRs: `npm ci`, `npm run prisma:generate`, `npm run prisma:migrate:deploy`, `npm run prisma:seed`, `npm run lint`, `npx tsc --noEmit`, `npm test`
+- On pushes to `main`: same base steps plus Playwright e2e (`npm run test:e2e`)
+- Both jobs spin up a Postgres 18 service container and inject required env vars (`DATABASE_URL`, `AUTH_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `NEXT_PUBLIC_APP_NAME`, `NEXT_PUBLIC_APP_URL`).
 
 ## Deployment
 

@@ -6,11 +6,33 @@ on:
     branches:
       - main
 
+env:
+  NEXT_PUBLIC_APP_NAME: "CI Detail"
+  NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+  DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/mobile_detail"
+  AUTH_SECRET: "ci-test-secret"
+  ADMIN_EMAIL: "owner@example.com"
+  ADMIN_PASSWORD: "password123!"
+
 jobs:
   pr-checks:
     name: PR Checks
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: mobile_detail
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d mobile_detail"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +45,18 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      - name: Wait for Postgres
+        run: timeout 30 bash -c 'until echo > /dev/tcp/localhost/5432; do sleep 2; done'
+
+      - name: Prisma Generate
+        run: npm run prisma:generate
+
+      - name: Prisma Migrate
+        run: npm run prisma:migrate:deploy
+
+      - name: Prisma Seed
+        run: npm run prisma:seed
 
       - name: Lint
         run: npm run lint
@@ -37,6 +71,20 @@ jobs:
     name: E2E (main)
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: mobile_detail
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d mobile_detail"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,6 +97,18 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      - name: Wait for Postgres
+        run: timeout 30 bash -c 'until echo > /dev/tcp/localhost/5432; do sleep 2; done'
+
+      - name: Prisma Generate
+        run: npm run prisma:generate
+
+      - name: Prisma Migrate
+        run: npm run prisma:migrate:deploy
+
+      - name: Prisma Seed
+        run: npm run prisma:seed
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
