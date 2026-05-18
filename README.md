@@ -172,6 +172,8 @@ Environment variables required at runtime:
 - `DATABASE_URL`
 - `AUTH_SECRET`
 
+Production startup also needs access to the checked-in Prisma migrations under `prisma/migrations` so `prisma migrate deploy` can run against the target database.
+
 ### Docker
 
 Build:
@@ -190,6 +192,8 @@ docker run --rm -p 3000:3000 \
   -e AUTH_SECRET="<generated secret>" \
   mobile-detail
 ```
+
+The container startup now runs `prisma migrate deploy` before the Next.js standalone server starts. This keeps the generated Prisma client in sync at build time and applies checked-in migrations against the runtime database on deploy.
 
 Local Postgres for development:
 
